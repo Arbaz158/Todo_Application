@@ -31,6 +31,36 @@
         <input type="password" id="password" name="password" placeholder="Password" required> <br>
         <input type="submit" value="Login">
         <p id="errorMessage" class="error-message" style="display: none; color: red;"></p>
+        <a id="signupLink" href="/signup" style="display: none;">signup</a>
     </form>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+          event.preventDefault(); // Prevent the default form submission
+    
+          var form = this;
+          var formData = new FormData(form);
+    
+          fetch('/login', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => {
+            if (response.ok) {
+                window.location.href = '/home';
+            } else {
+              
+              response.text().then(errorMessage => {
+                document.getElementById('errorMessage').innerText = errorMessage;
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('signupLink').style.display = 'block'; 
+              });
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        });
+      </script>
 </body>
 </html>

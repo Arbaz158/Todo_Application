@@ -7,11 +7,13 @@ import (
 
 func HandlerFunc() {
 	server := gin.Default()
-	server.POST("/signup", handlers.SignUp)
-	server.GET("/home", handlers.Home)
 
+	server.POST("/signup", handlers.SignUp)
 	server.GET("/signup", handlers.Sign)
-	server.POST("/", handlers.Login)
+
+	server.POST("/login", handlers.Login)
 	server.GET("/login", handlers.Log)
+
+	server.GET("/home", handlers.Home)
 	server.Run(":8082")
 }
