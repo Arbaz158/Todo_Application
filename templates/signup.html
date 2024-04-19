@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sign up</title>
+    <style>
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+        }
+        form {
+          max-width: 1000px;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: #f4f4f4;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      </style>
+</head>
+<body>
+    <form id = "signupForm" action="/signup" method="post">
+        <h2>SignUp</h2>
+        <input type="text" id="username" name="username" placeholder="Username" required> <br>
+        <input type="password" id="password" name="password" placeholder="Password" required> <br>
+        <input type="email" id="email" name="email" placeholder="Email" required> <br>
+        <input type="text", id="employeetype" name="employeetype" placeholder="EmployeeType" required><br>
+        <input type="submit" value="Signup">
+        <p id="errorMessage" class="error-message" style="display: none; color: red;"></p>
+        <a id="loginLink" href="/login" style="display: none;">login</a>
+    </form>
+    
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+          event.preventDefault(); // Prevent the default form submission
+    
+          var form = this;
+          var formData = new FormData(form);
+    
+          fetch('/signup', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => {
+            if (response.ok) {
+                window.location.href = '/home';
+            } else {
+              
+              response.text().then(errorMessage => {
+                document.getElementById('errorMessage').innerText = errorMessage;
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('loginLink').style.display = 'block'; 
+              });
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        });
+      </script>
+</body>
+</html>
