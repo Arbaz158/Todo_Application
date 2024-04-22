@@ -15,5 +15,6 @@ func HandlerFunc() {
 	server.GET("/login", handlers.Log)
 
 	server.GET("/home", handlers.Home)
+	server.POST("/add-data", handlers.UpdateEmployee)
 	server.Run(":8082")
 }

@@ -78,7 +78,7 @@ func Login(c *gin.Context) {
 		c.String(http.StatusUnauthorized, "Invalid Credentials")
 	}
 
-	accToken, _, err := authentication.GenerateTokenAndRefreshToen(emp)
+	accToken, _, err := authentication.GenerateTokenAndRefreshToken(emp)
 	if err != nil {
 		c.String(http.StatusBadRequest, "Error in Generating tokens")
 		return
@@ -95,4 +95,28 @@ func Login(c *gin.Context) {
 
 func Log(c *gin.Context) {
 	config.Tpl.ExecuteTemplate(c.Writer, "login.html", nil)
+}
+
+func UpdateEmployee(c *gin.Context) {
+	cookie, err := c.Cookie("token")
+	if err != nil {
+		c.String(http.StatusBadRequest, "error in getting cookie")
+		return
+	}
+	token := cookie
+	userName, err := authentication.VerifyToken(token)
+	if err != nil {
+		c.String(http.StatusBadRequest, "error in verifying token")
+		return
+	}
+	var emp model.Employee
+	filter := bson.M{"username": userName}
+	err = config.Col.Find(filter).One(&emp)
+	if err != nil {
+		c.String(http.StatusBadRequest, "error in getting employee type")
+		return
+	}
+	if emp.EmployeeType == "manager" {
+
+	}
 }

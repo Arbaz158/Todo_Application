@@ -10,7 +10,7 @@ import (
 
 var secretKey = []byte("secret")
 
-func GenerateTokenAndRefreshToen(emp model.Employee) (string, string, error) {
+func GenerateTokenAndRefreshToken(emp model.Employee) (string, string, error) {
 	accessToken := jwt.New(jwt.SigningMethodHS256)
 	accessToken.Claims = jwt.MapClaims{
 		"username": emp.UserName,
