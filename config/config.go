@@ -8,7 +8,7 @@ import (
 )
 
 var Tpl *template.Template
-var Col *mgo.Collection
+var DB *mgo.Database
 
 func init() {
 	Tpl = template.Must(template.ParseGlob("templates/*.html"))
@@ -18,5 +18,5 @@ func init() {
 		return
 	}
 	session.SetMode(mgo.Monotonic, true)
-	Col = session.DB("testing").C("employee")
+	DB = session.DB("testing")
 }

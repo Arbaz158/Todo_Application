@@ -1,14 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <style>
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .button {
+      width: 100px;
+      height: 100px;
+      margin: 20px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <input type="button" value="Add Employee"> 
-    <input type="button" value="Get Employee"> <br>
-    <input type="button" value="Update Employee"> 
-    <input type="button" value="Delete Employee"> <br>
+  <div class="button-container">
+    <button class="button">Add Stuff</button>
+    <button class="button">Get Stuff</button>
+    <button class="button">Update Stuff</button>
+    <button class="button">Delete Stuff</button>
+  </div>
 </body>
 </html>

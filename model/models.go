@@ -6,3 +6,10 @@ type Employee struct {
 	Email        string
 	EmployeeType string
 }
+
+type Stuff struct {
+	Desktop  string
+	Monitor  string
+	CPU      string
+	Quantity int
+}

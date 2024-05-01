@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -39,13 +40,13 @@ func SignUp(c *gin.Context) {
 		{"email": email},
 		{"username": uname},
 	}}
-	count, _ := config.Col.Find(filter).Count()
+	count, _ := config.DB.C("employee").Find(filter).Count()
 	if count > 0 {
 		c.String(http.StatusBadRequest, "Username or Email already exists")
 		return
 	}
 
-	err := config.Col.Insert(&emp)
+	err := config.DB.C("employee").Insert(&emp)
 	if err != nil {
 		c.String(http.StatusBadRequest, "error in inserting employee data")
 		return
@@ -67,7 +68,7 @@ func Login(c *gin.Context) {
 			{"password": password},
 		},
 	}
-	err := config.Col.Find(filter).One(&emp)
+	err := config.DB.C("employee").Find(filter).One(&emp)
 	if err != nil {
 		c.String(http.StatusUnauthorized, "Employee Not Found")
 		return
@@ -97,7 +98,17 @@ func Log(c *gin.Context) {
 	config.Tpl.ExecuteTemplate(c.Writer, "login.html", nil)
 }
 
-func UpdateEmployee(c *gin.Context) {
+func Add(c *gin.Context) {
+
+}
+
+func AddStuff(c *gin.Context) {
+
+	if c.Request.Method != "POST" {
+		c.Redirect(http.StatusSeeOther, "/")
+		return
+	}
+
 	cookie, err := c.Cookie("token")
 	if err != nil {
 		c.String(http.StatusBadRequest, "error in getting cookie")
@@ -111,12 +122,42 @@ func UpdateEmployee(c *gin.Context) {
 	}
 	var emp model.Employee
 	filter := bson.M{"username": userName}
-	err = config.Col.Find(filter).One(&emp)
+	err = config.DB.C("employee").Find(filter).One(&emp)
 	if err != nil {
 		c.String(http.StatusBadRequest, "error in getting employee type")
 		return
 	}
 	if emp.EmployeeType == "manager" {
-
+		var st model.Stuff
+		desktop := c.PostForm("desktop")
+		monitor := c.PostForm("monitor")
+		cpu := c.PostForm("monitor")
+		quantity := c.PostForm("quantity")
+		st.Desktop = desktop
+		st.Monitor = monitor
+		st.CPU = cpu
+		quan, err := strconv.Atoi(quantity)
+		if err != nil {
+			c.String(http.StatusBadRequest, "error in conversion")
+		}
+		st.Quantity = quan
+		err = config.DB.C("stuff").Insert(&st)
+		if err != nil {
+			c.String(http.StatusBadRequest, "error while inserting data")
+		}
+	} else {
+		c.String(http.StatusUnauthorized, "employee is not authorized for this operation")
 	}
+}
+
+func GetStuff(c *gin.Context) {
+
+}
+
+func UpdateStuff(c *gin.Context) {
+
+}
+
+func DeleteStuff(c *gin.Context) {
+
 }

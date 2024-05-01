@@ -11,11 +11,11 @@ import (
 var secretKey = []byte("secret")
 
 func GenerateTokenAndRefreshToken(emp model.Employee) (string, string, error) {
-	accessToken := jwt.New(jwt.SigningMethodHS256)
-	accessToken.Claims = jwt.MapClaims{
+	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"username": emp.UserName,
 		"exp":      time.Now().Add(time.Minute * 15).Unix(),
-	}
+	})
+
 	accessTokenString, err := accessToken.SignedString(secretKey)
 	if err != nil {
 		return "", "", err
