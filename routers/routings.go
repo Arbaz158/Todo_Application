@@ -15,7 +15,10 @@ func HandlerFunc() {
 	server.GET("/login", handlers.Log)
 
 	server.GET("/home", handlers.Home)
+
 	server.POST("/add-stuff", handlers.AddStuff)
+	server.GET("/add-stuff", handlers.Add)
+
 	server.GET("/get-stuff", handlers.GetStuff)
 	server.PUT("/update-stuff", handlers.UpdateStuff)
 	server.DELETE("/delete-stuff", handlers.DeleteStuff)

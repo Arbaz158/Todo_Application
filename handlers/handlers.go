@@ -99,7 +99,7 @@ func Log(c *gin.Context) {
 }
 
 func Add(c *gin.Context) {
-
+	config.Tpl.ExecuteTemplate(c.Writer, "addstuff.html", nil)
 }
 
 func AddStuff(c *gin.Context) {
