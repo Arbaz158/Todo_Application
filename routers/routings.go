@@ -22,5 +22,5 @@ func HandlerFunc() {
 	server.GET("/get-stuff", handlers.GetStuff)
 	server.PUT("/update-stuff", handlers.UpdateStuff)
 	server.DELETE("/delete-stuff", handlers.DeleteStuff)
-	server.Run(":8082")
+	server.Run(":8080")
 }
