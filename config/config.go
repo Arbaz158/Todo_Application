@@ -12,7 +12,7 @@ var DB *mgo.Database
 
 func init() {
 	Tpl = template.Must(template.ParseGlob("templates/*.html"))
-	session, err := mgo.Dial("mongodb://localhost:27017")
+	session, err := mgo.Dial("mongodb://172.31.43.162:27017")
 	if err != nil {
 		fmt.Println("error in connection :", err)
 		return
